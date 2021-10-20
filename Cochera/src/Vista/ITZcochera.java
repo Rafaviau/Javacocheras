@@ -187,7 +187,7 @@ public class ITZcochera extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     /**
      * BTNagregar, agrega un objeto a la base de datos
-     * Llama a la controladora enviando los datos correspondientes de los text boxes 
+     * Llama a la controladora enviando los datos correspondientes de los textbox 
      * @param evt 
      */
     private void BTNagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNagregarActionPerformed
