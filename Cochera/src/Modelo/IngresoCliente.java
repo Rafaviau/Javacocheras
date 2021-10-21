@@ -10,8 +10,13 @@ public class IngresoCliente {
     int dni;
     LocalDateTime entrada;
     LocalDateTime salida;
+    LocalDate fecha;
     
     //Getters
+    
+    public LocalDate getFecha() {
+        return fecha;
+    }
 
     public TipoVehiculo getTipodevehiculo() {
         return tipodevehiculo;
@@ -39,6 +44,10 @@ public class IngresoCliente {
     
     //Setters
 
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+    
     public void setTipodevehiculo(TipoVehiculo tipodevehiculo) {
         this.tipodevehiculo = tipodevehiculo;
     }
@@ -65,13 +74,16 @@ public class IngresoCliente {
     
     //Constructor
 
-    public IngresoCliente(TipoVehiculo tipodevehiculo, String patente, Cochera cocheraqueocupa, int dni, LocalDateTime entrada) {
+    public IngresoCliente(TipoVehiculo tipodevehiculo, String patente, Cochera cocheraqueocupa, int dni, LocalDateTime entrada, LocalDate fecha) {
         this.tipodevehiculo = tipodevehiculo;
         this.patente = patente;
         this.cocheraqueocupa = cocheraqueocupa;
         this.dni = dni;
         this.entrada = entrada;
+        this.fecha = fecha;
     }
+
+
     
     //Metodos
     int HorasOcupadas(IngresoCliente a){

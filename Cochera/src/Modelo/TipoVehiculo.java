@@ -57,7 +57,7 @@ public class TipoVehiculo {
 
     @Override
     public String toString() {
-        return "TipoVehiculo{" + "nombre=" + nombre + ", PrecioPorHora=" + PrecioPorHora + ", CantPlazasQueOcupa=" + CantPlazasQueOcupa + ", id=" + id + '}';
+        return  nombre;
     }
     
 }

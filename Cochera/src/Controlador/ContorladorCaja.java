@@ -3,6 +3,7 @@ package Controlador;
 import Modelo.Caja;
 import Modelo.dao.DAOcaja;
 import java.time.LocalDate;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ContorladorCaja {
@@ -15,8 +16,9 @@ public class ContorladorCaja {
         }else if(Float.parseFloat(cajainicial)<0){
             JOptionPane.showMessageDialog(null,"Error\nLa caja inicial no puede ser menor a 0.");
         }else{
-        l.create(new Caja(LocalDate.parse(fecha),Float.parseFloat(cajainicial)));
-        return true;
+            if(l.create(new Caja(LocalDate.parse(fecha),Float.parseFloat(cajainicial)))){
+                return true;
+            }
         }
         return false;
     }
@@ -49,15 +51,21 @@ public class ContorladorCaja {
        }
    
    public boolean editar(String fecha,String cajainicial){
-       if(fecha.equals("")){
-           JOptionPane.showMessageDialog(null,"Error\nLa fecha no puede estar vacia.");
-       }else if(cajainicial.equals("")){
-           cajainicial = "0";
+       if(fecha.equals("") || cajainicial.equals("")){
+           JOptionPane.showMessageDialog(null,"Error\nNo pueden haber campos vacios.");
        }else{
            l.update(new Caja(LocalDate.parse(fecha),Float.parseFloat(cajainicial)));
            return true;
        }
        return false;
    }
-   
+       
+   public List<Caja> mostrartodo(){
+        return l.readALL();
+    }
+       
+   public Caja mostrar(int key){
+       return l.read(key);
+   }
+     
 }

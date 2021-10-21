@@ -3,6 +3,7 @@ public class Cochera {
     int id;
     String nombre;
     int ocupaciones;
+    int ocdisponibles;
 
     
     //Getters y Setters
@@ -29,6 +30,16 @@ public class Cochera {
     public void setId(int id) {
         this.id = id;
     }
+
+    public int getOcdisponibles() {
+        return ocdisponibles;
+    }
+
+    public void setOcdisponibles(int ocdisponibles) {
+        this.ocdisponibles = ocdisponibles;
+    }
+    
+    
     
  //Constructor
 
@@ -43,9 +54,19 @@ public class Cochera {
         this.ocupaciones = ocupaciones;
     } 
 
+    public Cochera(int id, String nombre, int ocupaciones, int ocdisponibles) {
+        this.id = id;
+        this.nombre = nombre;
+        this.ocupaciones = ocupaciones;
+        this.ocdisponibles = ocdisponibles;
+    }
+
     @Override
     public String toString() {
-        return "Cochera{" + "id=" + id + ", nombre=" + nombre + ", ocupaciones=" + ocupaciones + '}';
+        return "Cochera{" + "id=" + id + ", nombre=" + nombre + ", ocupaciones=" + ocupaciones + ", ocdisponibles=" + ocdisponibles + '}';
     }
+    
+    
+
     
 }

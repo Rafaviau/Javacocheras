@@ -37,8 +37,8 @@ public class DAOcaja implements crud <Caja> {
         try {    
             ps = cn.getCnn().prepareStatement(SQL_CREATE);
             ps.setString(1, c.getFecha().toString());
-            ps.setString(2, Float.toString(c.getCajainicial()));
-            ps.setString(3, Float.toString(c.getCajafinal()));
+            ps.setFloat(2, c.getCajainicial());
+            ps.setFloat(3, c.getCajafinal());
             
             if(ps.executeUpdate() > 0){
                 JOptionPane.showMessageDialog(null,"Creado correctamente.");

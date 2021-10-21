@@ -6,7 +6,6 @@
 package Modelo.dao;
 
 import Modelo.Cochera;
-import Modelo.Cochera;
 import conexion.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +23,7 @@ import javax.swing.JOptionPane;
 public class DAOCochera implements crud <Cochera> {
     private static final String SQL_CREATE = "INSERT INTO cochera (nombre,capacidad) VALUES(?,?)";
     private static final String SQL_DELETE = "DELETE FROM cochera WHERE idcochera = ?";
-    private static final String SQL_UPDATE = "UPDATE cochera SET nombre = ?, capacidad = ? WHERE idcochera = ?";
+    private static final String SQL_UPDATE = "UPDATE cochera SET nombre = ?, capacidad = ?,ocupadoact = ? WHERE idcochera = ?";
     private static final String SQL_READ = "SELECT * FROM cochera WHERE idcochera=?";
     private static final String SQL_READALL = "SELECT * FROM cochera";
     
@@ -81,8 +80,9 @@ public class DAOCochera implements crud <Cochera> {
         try {
             ps = cn.getCnn().prepareStatement(SQL_UPDATE);
             ps.setString(1, c.getNombre());
-            ps.setString(2, Integer.toString(c.getOcupaciones()));
-            ps.setString(3,Integer.toString(c.getId()));
+            ps.setInt(2, c.getOcupaciones());
+            ps.setInt(3, c.getOcdisponibles());
+            ps.setString(4,Integer.toString(c.getId()));
             if (ps.executeUpdate() > 0){
                 JOptionPane.showMessageDialog(null,"Actualizado CORRECTAMENTE.");
                 return true;
@@ -106,7 +106,7 @@ public class DAOCochera implements crud <Cochera> {
             ps.setString(1, key.toString()); 
             res = ps.executeQuery();
             while(res.next()){
-                 l = new Cochera(Integer.parseInt(res.getString(1)),res.getString(2),Integer.parseInt(res.getString(3))); 
+                 l = new Cochera(Integer.parseInt(res.getString(1)),res.getString(2),Integer.parseInt(res.getString(3)),Integer.parseInt(res.getString(4))); 
             }
             return l;
         } catch (SQLException ex) {
@@ -126,7 +126,7 @@ public class DAOCochera implements crud <Cochera> {
             ps = cn.getCnn().prepareStatement(SQL_READALL);
             res = ps.executeQuery();
             while(res.next()){
-                cocheras.add(new Cochera(Integer.parseInt(res.getString(1)),res.getString(2),Integer.parseInt(res.getString(3))));
+                cocheras.add(new Cochera(Integer.parseInt(res.getString(1)),res.getString(2),Integer.parseInt(res.getString(3)),Integer.parseInt(res.getString(4)))); 
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCochera.class.getName()).log(Level.SEVERE, null, ex);

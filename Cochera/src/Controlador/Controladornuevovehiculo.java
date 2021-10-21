@@ -47,4 +47,8 @@ public class Controladornuevovehiculo {
         return l.readALL();
     }
     
+    public TipoVehiculo mostrar(int key){
+        return l.read(key);
+    }
+
 }
