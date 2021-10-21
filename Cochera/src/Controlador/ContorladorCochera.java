@@ -44,16 +44,22 @@ public class ContorladorCochera{
      * @param nombre
      * @param capacidad 
      */
-    public void editar(String id, String nombre, String capacidad){
+    public void editar(String id, String nombre, String capacidad, String ocactual){
+        int f;
         if(id.equals("")){
             JOptionPane.showMessageDialog(null,"Error\nSeleccione el objeto que desea editar.");
         }else if(nombre.equals("") || capacidad.equals("")){
             JOptionPane.showMessageDialog(null,"Error\nNo pueden haber campos vacios.");
         }else if(Integer.parseInt(capacidad)<1){
             JOptionPane.showMessageDialog(null,"Error\nLa capacidad no puede ser menor a 1.");
+        }else if(Integer.parseInt(capacidad) < l.read(id).getOcdisponibles()){
+            JOptionPane.showMessageDialog(null,"Error\nLa capacidad no puede ser menor a las ocupaciones actuales.");
+        }else if(ocactual == null){
+            f = l.read(id).getOcdisponibles();
+            l.update(new Cochera(Integer.parseInt(id),nombre,Integer.parseInt(capacidad),f));
         }
         else{
-            l.update(new Cochera(Integer.parseInt(id),nombre,Integer.parseInt(capacidad)));
+            l.update(new Cochera(Integer.parseInt(id),nombre,Integer.parseInt(capacidad),Integer.parseInt(ocactual)));
         }
     }
     /**
@@ -63,5 +69,9 @@ public class ContorladorCochera{
      */
     public List<Cochera> mostrartodo(){
         return l.readALL();
+    }
+    
+        public Cochera mostrar(int key){
+        return l.read(key);
     }
 }

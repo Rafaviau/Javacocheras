@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Vista/ITZcochera.java</file>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Vista/cajabuscar.java</file>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Vista/ITZnuevotipodevehiculo.java</file>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Modelo/dao/DAOCochera.java</file>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Controlador/Controladornuevovehiculo.java</file>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Vista/ITZingresocliente.java</file>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Modelo/dao/DAOingresocliente.java</file>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Controlador/ControladorCliente.java</file>
+            <file>file:/E:/Proyectos/Cocheras/Javacocheras/Cochera/src/Controlador/ContorladorCochera.java</file>
+        </group>
     </open-files>
 </project-private>

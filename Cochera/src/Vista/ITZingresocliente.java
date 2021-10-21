@@ -5,6 +5,11 @@
  */
 package Vista;
 import Controlador.ContorladorCaja;
+import Controlador.ContorladorCochera;
+import Controlador.ControladorCliente;
+import Controlador.Controladornuevovehiculo;
+import Modelo.TipoVehiculo;
+import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 
 
@@ -14,9 +19,13 @@ import javax.swing.JOptionPane;
  */
 public class ITZingresocliente extends javax.swing.JFrame {
     ContorladorCaja ctr = new ContorladorCaja();
-    Boolean contador = false; // para saber si hay una caja iniciada o no
+    ControladorCliente ctrc = new ControladorCliente();
+    Controladornuevovehiculo ctrnv = new Controladornuevovehiculo();
+    ContorladorCochera ctrch = new ContorladorCochera();
     public ITZingresocliente() {
         initComponents();
+        BTNcerrarcaja.setVisible(false);
+        actualizarCBtipovehiculo();
     }
 
     /**
@@ -87,8 +96,6 @@ public class ITZingresocliente extends javax.swing.JFrame {
 
         jLabel5.setText("Tipo de vehiculo");
 
-        CBtipovehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         jLabel6.setText("Cochera");
 
         CBcochera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -96,6 +103,11 @@ public class ITZingresocliente extends javax.swing.JFrame {
         jLabel7.setText("Hora de entrada");
 
         TBhoraactual.setText("hora actual");
+        TBhoraactual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TBhoraactualActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -111,6 +123,11 @@ public class ITZingresocliente extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTable1);
 
         BTNagregar.setText("Agregar");
+        BTNagregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNagregarActionPerformed(evt);
+            }
+        });
 
         BTNvehiculobuscar.setText("Buscar");
 
@@ -135,10 +152,25 @@ public class ITZingresocliente extends javax.swing.JFrame {
         BTNsalidavehiculo.setText("Retirar vehiculo");
 
         BTNcochera.setText("Agregar una nueva cochera");
+        BTNcochera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNcocheraActionPerformed(evt);
+            }
+        });
 
         BTNtvehiculo.setText("Agregar un nuevo tipo de vehiculo");
+        BTNtvehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNtvehiculoActionPerformed(evt);
+            }
+        });
 
-        TBcajabuscar.setText("Buscar");
+        TBcajabuscar.setText("Mostrar todo");
+        TBcajabuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TBcajabuscarActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("YYYY-MM-DD");
 
@@ -224,7 +256,7 @@ public class ITZingresocliente extends javax.swing.JFrame {
                                         .addComponent(LBLcajafinal))
                                     .addComponent(TBcajabuscar)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addGap(0, 20, Short.MAX_VALUE)
                                         .addComponent(BTNcrearcaja, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(BTNcerrarcaja, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,57 +267,58 @@ public class ITZingresocliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(217, 217, 217)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BTNagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTNvehiculobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(BTNsalidavehiculo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BTNeliminar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTNvehiculoeditar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(47, 47, 47)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(55, 55, 55)
+                                .addComponent(BTNsalidavehiculo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(BTNvehiculoeditar, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(BTNeliminar))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(51, 51, 51)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(33, 33, 33))
                                     .addComponent(jLabel5))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
-                                            .addComponent(CBtipovehiculo, 0, 61, Short.MAX_VALUE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
-                                            .addComponent(TBdni)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(TBhoraentrada, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel6)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(TBhoraactual)
-                                        .addComponent(jLabel2))
-                                    .addComponent(jLabel4))
-                                .addGap(37, 37, 37)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(TBpatente)
-                                    .addComponent(CBcochera, 0, 61, Short.MAX_VALUE)))
+                                .addGap(142, 142, 142))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(21, 21, 21))
+                                .addGap(32, 32, 32)
+                                .addComponent(jLabel6)
+                                .addGap(37, 37, 37)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CBtipovehiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(TBdni)
+                                    .addComponent(CBcochera, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(BTNagregar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(BTNvehiculobuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(24, 24, 24)
+                                        .addComponent(jLabel4)
+                                        .addGap(17, 17, 17)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(TBpatente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE)
+                                    .addComponent(TBhoraentrada, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(TBhoraactual, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(74, 74, 74))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -298,7 +331,7 @@ public class ITZingresocliente extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
                             .addComponent(LBLfecha))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TBfecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel13)
@@ -328,50 +361,51 @@ public class ITZingresocliente extends javax.swing.JFrame {
                             .addComponent(LBLcajafinal))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TBcajabuscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(BTNcochera, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(BTNtvehiculo))
+                        .addGap(10, 10, 10)
+                        .addComponent(BTNtvehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel4)
                                     .addComponent(TBpatente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(28, 28, 28))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(TBhoraentrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TBhoraactual, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(BTNagregar)
+                                    .addComponent(BTNvehiculobuscar)))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
                                     .addComponent(TBdni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(27, 27, 27)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(CBcochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel5)
-                                .addComponent(CBtipovehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6)))
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TBhoraentrada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TBhoraactual, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
-                        .addGap(1, 1, 1)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(BTNagregar)
-                            .addComponent(BTNvehiculobuscar))
-                        .addGap(27, 27, 27)
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(CBtipovehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(38, 38, 38)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CBcochera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(BTNeliminar)
                             .addComponent(BTNvehiculoeditar)
                             .addComponent(BTNsalidavehiculo))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 33, Short.MAX_VALUE)))
+                .addContainerGap())
             .addComponent(jSeparator1)
         );
 
@@ -387,48 +421,73 @@ public class ITZingresocliente extends javax.swing.JFrame {
     }//GEN-LAST:event_BTNañadirActionPerformed
 
     private void BTNcrearcajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcrearcajaActionPerformed
-        if(contador == false){
-            if(ctr.crear(TBfecha.getText(), TBcajainicial.getText())){ //ejecuta el metodo crear del parametro y si se ejecuta correctamente se ejecutara elr esto del codigo
-            contador = true;
+        if(ctr.crear(TBfecha.getText(), TBcajainicial.getText())){ //ejecuta el metodo crear del parametro y si se ejecuta correctamente se ejecutara elr esto del codigo
             actualizarlbl(TBfecha.getText());
             LBLfecha.setText(TBfecha.getText());
             TBfecha.setVisible(false);
-            TBcajainicial.setVisible(false); 
-            }else{
-                JOptionPane.showMessageDialog(null,"Error\nDatos invalidos.");  
-            }
+            TBcajainicial.setVisible(false);
+            
+            BTNcerrarcaja.setVisible(true);
+            BTNcrearcaja.setVisible(false);
+            BTNeditarcaja.setVisible(false);
         }else{
-          JOptionPane.showMessageDialog(null,"Error\nYa hay un caja activa.Cierra la caja actual paara iniciar otra.");  
+            JOptionPane.showMessageDialog(null,"Error\nDatos invalidos.");  
         }
     }//GEN-LAST:event_BTNcrearcajaActionPerformed
 
     private void BTNcerrarcajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcerrarcajaActionPerformed
-        if(contador == false){
-            JOptionPane.showMessageDialog(null,"Error\nNo hay una caja activa.");
-        }else{
-            contador = false;
-            LBLfecha.setText("----------");
-            TBfecha.setVisible(true);
-            TBcajainicial.setVisible(true); 
-            TBfecha.setText("");
-            TBcajainicial.setText("");
-            LBLcajafinal.setText("0");
-        }
+        LBLfecha.setText("----------");
+        TBfecha.setVisible(true);
+        TBcajainicial.setVisible(true); 
+        TBfecha.setText("");
+        TBcajainicial.setText("");
+        LBLcajafinal.setText("0");
+        
+        BTNcerrarcaja.setVisible(false);
+        BTNcrearcaja.setVisible(true);
+        BTNeditarcaja.setVisible(true);
     }//GEN-LAST:event_BTNcerrarcajaActionPerformed
 
     private void BTNeditarcajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNeditarcajaActionPerformed
-        if(contador == false){
-            if(ctr.editar(TBfecha.getText(), TBcajainicial.getText())){
-                contador = true;
-                actualizarlbl(TBfecha.getText());
-                LBLfecha.setText(TBfecha.getText());
-                TBfecha.setVisible(false);
-                TBcajainicial.setVisible(false); 
-        }else{
-          JOptionPane.showMessageDialog(null,"Error\nYa hay un caja activa.Cierre la caja actual paara iniciar otra.");  
-            }
+        if(ctr.editar(TBfecha.getText(), TBcajainicial.getText())){
+            actualizarlbl(TBfecha.getText());
+            LBLfecha.setText(TBfecha.getText());
+            TBfecha.setVisible(false);
+            TBcajainicial.setVisible(false); 
+            
+            BTNcerrarcaja.setVisible(true);
+            BTNcrearcaja.setVisible(false);
+            BTNeditarcaja.setVisible(false);
         }
     }//GEN-LAST:event_BTNeditarcajaActionPerformed
+
+    private void TBcajabuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TBcajabuscarActionPerformed
+        cajabuscar abrir = new cajabuscar();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_TBcajabuscarActionPerformed
+
+    private void BTNcocheraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNcocheraActionPerformed
+        ITZcochera abrir = new ITZcochera();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_BTNcocheraActionPerformed
+
+    private void BTNtvehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNtvehiculoActionPerformed
+        ITZnuevotipodevehiculo abrir = new ITZnuevotipodevehiculo();
+        abrir.setVisible(true);
+    }//GEN-LAST:event_BTNtvehiculoActionPerformed
+/***
+ * 
+ * @param evt 
+ */
+    private void BTNagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNagregarActionPerformed
+        CBtipovehiculo.getSelectedIndex();
+        
+        ctrc.crear(CBtipovehiculo.getSelectedIndex(), TBpatente.getText(), CBcochera.getSelectedIndex(), TBdni.getText(), TBhoraentrada.getText(), LBLfecha.getText());
+    }//GEN-LAST:event_BTNagregarActionPerformed
+
+    private void TBhoraactualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TBhoraactualActionPerformed
+        TBhoraentrada.setText(Integer.toString(LocalDateTime.now().getHour())+":"+Integer.toString(LocalDateTime.now().getMinute()));
+    }//GEN-LAST:event_TBhoraactualActionPerformed
     
     public void actualizarlbl(String fecha){
         float value = ctr.obtenercajafinal(fecha);
@@ -468,7 +527,14 @@ public class ITZingresocliente extends javax.swing.JFrame {
             }
         });
     }
-
+    
+    public void actualizarCBtipovehiculo(){
+        int contador=0;
+        for (TipoVehiculo mostrartodo : ctrnv.mostrartodo()) {
+            CBtipovehiculo.addItem(ctrnv.mostrartodo().get(contador).toString());
+            contador++;
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNagregar;
     private javax.swing.JButton BTNañadir;

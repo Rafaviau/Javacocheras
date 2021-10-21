@@ -46,7 +46,7 @@ public class ITZnuevotipodevehiculo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         Jtabletvehiculos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 24)); // NOI18N
         jLabel1.setText("Nuevo tipo de vehiculo");
