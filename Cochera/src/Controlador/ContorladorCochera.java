@@ -43,6 +43,7 @@ public class ContorladorCochera{
      * @param id
      * @param nombre
      * @param capacidad 
+     * @param ocactual ocupacion actual de la cochera, se utiliza
      */
     public void editar(String id, String nombre, String capacidad, String ocactual){
         int f;
@@ -71,7 +72,7 @@ public class ContorladorCochera{
         return l.readALL();
     }
     
-        public Cochera mostrar(int key){
-        return l.read(key);
+    public Cochera mostrar(int key){
+    return l.read(key);
     }
 }

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -121,7 +122,21 @@ public class DAOingresocliente implements crud <IngresoCliente>{
 
     @Override
     public List<IngresoCliente> readALL() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       PreparedStatement ps;
+        ResultSet res;
+        ArrayList <IngresoCliente> cliente = new ArrayList();
+        try {    
+            ps = cn.getCnn().prepareStatement(SQL_READALL);
+            res = ps.executeQuery();
+            while(res.next()){
+                cliente.add(new IngresoCliente()); 
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCochera.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            cn.cerraconexion();
+        }
+        return cliente;
     }
 
     @Override

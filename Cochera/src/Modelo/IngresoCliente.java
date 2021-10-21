@@ -2,14 +2,15 @@ package Modelo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class IngresoCliente {
     TipoVehiculo tipodevehiculo;
     String patente;
     Cochera cocheraqueocupa;
     int dni;
-    LocalDateTime entrada;
-    LocalDateTime salida;
+    LocalTime entrada;
+    LocalTime salida;
     LocalDate fecha;
     
     //Getters
@@ -34,11 +35,11 @@ public class IngresoCliente {
         return dni;
     }
 
-    public LocalDateTime getEntrada() {
+    public LocalTime getEntrada() {
         return entrada;
     }
 
-    public LocalDateTime getSalida() {
+    public LocalTime getSalida() {
         return salida;
     }
     
@@ -64,17 +65,17 @@ public class IngresoCliente {
         this.dni = dni;
     }
 
-    public void setEntrada(LocalDateTime entrada) {
+    public void setEntrada(LocalTime entrada) {
         this.entrada = entrada;
     }
 
-    public void setSalida(LocalDateTime salida) {
+    public void setSalida(LocalTime salida) {
         this.salida = salida;
     }
     
     //Constructor
 
-    public IngresoCliente(TipoVehiculo tipodevehiculo, String patente, Cochera cocheraqueocupa, int dni, LocalDateTime entrada, LocalDate fecha) {
+    public IngresoCliente(TipoVehiculo tipodevehiculo, String patente, Cochera cocheraqueocupa, int dni, LocalTime entrada, LocalDate fecha) {
         this.tipodevehiculo = tipodevehiculo;
         this.patente = patente;
         this.cocheraqueocupa = cocheraqueocupa;
