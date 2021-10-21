@@ -107,8 +107,8 @@ public class DAOingresocliente implements crud <IngresoCliente>{
             ps.setString(1, key.toString()); 
             res = ps.executeQuery();
             while(res.next()){
-                 l = new IngresoCliente(res.getString(1) , Float.parseFloat(res.getString(2)) , Float.parseFloat(res.getString(3)) ,
-                         Float.parseFloat(res.getString(4)) , Float.parseFloat(res.getString(5))); 
+                 //l = new IngresoCliente(res.getString(1) , Float.parseFloat(res.getString(2)) , Float.parseFloat(res.getString(3)) ,
+                   //      Float.parseFloat(res.getString(4)) , Float.parseFloat(res.getString(5))); 
             }
             return l;
         } catch (SQLException ex) {
