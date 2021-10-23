@@ -84,16 +84,5 @@ public class IngresoCliente {
         this.fecha = fecha;
     }
 
-
-    
-    //Metodos
-    int HorasOcupadas(IngresoCliente a){
-        int horasocupadas;
-        horasocupadas = a.getSalida().getHour()- a.getEntrada().getHour();
-        if (horasocupadas == 0){
-            horasocupadas +=1;
-        }
-        return horasocupadas;
-    }
     
 }

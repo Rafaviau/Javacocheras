@@ -90,7 +90,7 @@ public class Caja {
 
     @Override
     public String toString() {
-        return "Caja{" + "cajainicial=" + cajainicial + ", gastos=" + gastos + ", ingresos=" + ingresos + ", cajafinal=" + cajafinal + ", fecha=" + fecha + '}';
+        return "Caja:\n" + "cajainicial=" + cajainicial + ", gastos=" + gastos + ", ingresos=" + ingresos + ", cajafinal=" + cajafinal + ", fecha=" + fecha;
     }
      
 }

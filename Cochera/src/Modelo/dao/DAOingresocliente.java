@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,17 +17,11 @@ public class DAOingresocliente implements crud <IngresoCliente>{
     private static final String SQL_CREATE = "INSERT INTO ingresocliente (patente, idtipovehiculo, idcochera, fecha, dni, horaentrada) VALUES(?,?,?,?,?,?)";
     private static final String SQL_DELETE = "DELETE FROM ingresocliente WHERE patente = ? AND horaentrada = ?";
     private static final String SQL_UPDATE = "UPDATE ingresocliente SET idtipovehiculo = ?, idcochera = ?, fecha = ?, dni = ? WHERE patente = ? AND horaentrada = ?";
+    private static final String SQL_UPDATESALIDA = "UPDATE ingresocliente SET horasalida = ? WHERE patente = ? AND horaentrada = ?";
     private static final String SQL_READ   = "SELECT * FROM ingresocliente WHERE patente = ? AND horaentrada = ?";
     private static final String SQL_READALL= "SELECT * FROM ingresocliente";
-    /*
-    private static final String SQL_CREATE=
-    "SELECT i.patente,i.fecha,i.dni,i.horaentrada,c.idcochera,c.nombre,c.capacidad,t.*"
-            + "FROM ingresocliente AS i "
-            + "INNER JOIN cochera AS c "
-            + "ON i.idcochera=c.idcochera "
-            + "INNER JOIN tipovehiculo AS t"
-            + "ON i.idtipovehiculo=t.idtipovehiculo"
-        */
+    private static final String SQL_READALLSTRING="SELECT i.patente,i.fecha,i.dni,i.horaentrada,i.horasalida,c.nombre,t.nombre FROM ingresocliente as i INNER JOIN cochera as c "
+            + "ON i.idcochera=c.idcochera INNER JOIN tipovehiculo AS t ON i.idtipovehiculo=t.idtipovehiculo ORDER BY i.horaentrada";
 
     private static final Conexion cn = Conexion.verificador();
 
@@ -97,6 +92,26 @@ public class DAOingresocliente implements crud <IngresoCliente>{
         }  
         return false;    
     }
+    
+    public boolean updateSALIDA(LocalTime hsalida, LocalTime hentrada, String pat) {
+        PreparedStatement ps;
+        try {
+            ps = cn.getCnn().prepareStatement(SQL_UPDATESALIDA);
+            ps.setString(1, hsalida.toString());
+            ps.setString(2, pat);
+            ps.setString(3, hentrada.toString());
+            
+            if (ps.executeUpdate() > 0){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCochera.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null,"Error, la base de datos no guardo los cambios");
+        }finally{
+            cn.cerraconexion();
+        }  
+        return false;    
+    }
 
     @Override
     public IngresoCliente read(Object key) {
@@ -129,7 +144,7 @@ public class DAOingresocliente implements crud <IngresoCliente>{
             ps = cn.getCnn().prepareStatement(SQL_READALL);
             res = ps.executeQuery();
             while(res.next()){
-                cliente.add(new IngresoCliente()); 
+                //cliente.add(new IngresoCliente()); 
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCochera.class.getName()).log(Level.SEVERE, null, ex);
@@ -144,5 +159,39 @@ public class DAOingresocliente implements crud <IngresoCliente>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+
+    public String[][] readALLstring() {
+        int size =0;
+        int i = 0;
+        PreparedStatement ps;
+        ResultSet res;
+
+        try {    
+            ps = cn.getCnn().prepareStatement(SQL_READALLSTRING);
+            res = ps.executeQuery(); 
+            while(res.next()){
+                size++;
+            }
+            String[][] a = new String[size][7];
+            ps = cn.getCnn().prepareStatement(SQL_READALLSTRING);
+            res = ps.executeQuery(); 
+            while(res.next()){
+                a[i][0]=res.getString(1);
+                a[i][1]=res.getString(2);
+                a[i][2]=res.getString(3);
+                a[i][3]=res.getString(4);
+                a[i][4]=res.getString(5);
+                a[i][5]=res.getString(6);
+                a[i][6]=res.getString(7);
+                i++;
+            }
+            return a;
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCochera.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            cn.cerraconexion();
+        }
+        return null;
+    }
     
 }

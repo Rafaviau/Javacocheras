@@ -6,12 +6,15 @@
 package Vista;
 
 import Controlador.ContorladorCochera;
+import Controlador.Controladornuevovehiculo;
 import Modelo.Cochera;
 import Modelo.IngresoCliente;
+import Modelo.dao.DAOingresocliente;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,9 +27,9 @@ public class prueba {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        String e = "10:30";
-        LocalTime entrada = LocalTime.parse(e);
-        System.out.print(entrada);
+        Controladornuevovehiculo j = new Controladornuevovehiculo();
+        float a = j.mostrar(12).getPrecioPorHora();
+        System.out.print(a);
     }
     
 }

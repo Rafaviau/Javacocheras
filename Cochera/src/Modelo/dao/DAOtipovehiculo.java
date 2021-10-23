@@ -18,6 +18,7 @@ public class DAOtipovehiculo implements crud <TipoVehiculo>{
     private static final String SQL_DELETE = "DELETE FROM tipovehiculo WHERE idtipovehiculo = ?";
     private static final String SQL_UPDATE = "UPDATE tipovehiculo SET nombre = ?, plazasocupadas = ?,importe = ? WHERE 	idtipovehiculo = ?";
     private static final String SQL_READ = "SELECT * FROM tipovehiculo WHERE 	idtipovehiculo = ?";
+    private static final String SQL_INDICE = "SELECT * FROM tipovehiculo WHERE 	nombre = ?"; //Solo va a devolver 1 fila porque el atributo nombre es de tipo unico en la base de datos
     private static final String SQL_READALL = "SELECT * FROM tipovehiculo";
     private static final Conexion cn = Conexion.verificador();
     @Override
@@ -98,6 +99,27 @@ public class DAOtipovehiculo implements crud <TipoVehiculo>{
         } catch (SQLException ex) {
             Logger.getLogger(DAOCochera.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null,"Error, la base de datos no guardo los cambios");
+        }finally{
+            cn.cerraconexion();
+        }
+        return l;
+    }
+    
+    public int indice(String key) { 
+        PreparedStatement ps;
+        ResultSet res;
+        int l=-1;
+        try {
+            ps = cn.getCnn().prepareStatement(SQL_INDICE);
+            ps.setString(1, key.toString()); 
+            res = ps.executeQuery();
+            while(res.next()){
+                 l=Integer.parseInt(res.getString(1));
+                
+            }
+            return l;
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOCochera.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
             cn.cerraconexion();
         }

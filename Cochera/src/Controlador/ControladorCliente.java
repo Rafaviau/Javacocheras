@@ -3,9 +3,7 @@ package Controlador;
 import Modelo.IngresoCliente;
 import Modelo.dao.DAOingresocliente;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 public class ControladorCliente {
@@ -46,18 +44,33 @@ public class ControladorCliente {
             //Crea el nuevo ingreso de cliente
             IngresoCliente nc = new IngresoCliente(j.mostrartodo().get(tv), patente, f.mostrartodo().get(cocheraqueocupa) ,Integer.parseInt(dni), LocalTime.parse(entrada), LocalDate.parse(fecha));
             l.create(nc);
-           /* int id = f.mostrar(cocheraqueocupa).getId();
-            String nombre = f.mostrar(cocheraqueocupa).getNombre();
-            int capacidad = f.mostrar(cocheraqueocupa).getOcupaciones();
-            int ocdisp = f.mostrar(cocheraqueocupa).getOcupaciones() + j.mostrar(tv).getCantPlazasQueOcupa();
+            
+            int id = f.mostrartodo().get(cocheraqueocupa).getId();
+            int ocdisp = f.mostrartodo().get(cocheraqueocupa).getOcdisponibles()+ j.mostrartodo().get(tv).getCantPlazasQueOcupa();
             //actualiza la cochera para guardar cuantas plazas ocupadas tiene
-            f.editar(Integer.toString(id),nombre,Integer.toString(capacidad),Integer.toString(ocdisp));
-*/
+            f.editarocupacion(ocdisp, id);
+
             }
         }
     
     
-   public List<IngresoCliente> mostrartodo(){
-        return l.readALL();
+   public String[][] mostrartodo(){
+        return l.readALLstring();
     }
+   
+   public void retirarvehiculo(String entr, String pat){
+       LocalTime salida = LocalTime.now();
+       LocalTime entrada = LocalTime.parse(entr);
+       l.updateSALIDA(salida,entrada,pat);
+   }
+   
+   public float APagar(LocalTime hentrada, int key){
+       float ht = LocalTime.now().getHour()- hentrada.getHour(); //hora de salida - hora de entrada
+       if (ht == 0){
+            ht +=1;
+        }
+        float pagar = j.mostrar(key).getPrecioPorHora() * ht;
+        
+        return pagar;
     }
+}
