@@ -46,7 +46,7 @@ public class TipoVehiculo {
         this.CantPlazasQueOcupa = CantPlazasQueOcupa;
     }
 
-    public TipoVehiculo(int id, String nombre, float PrecioPorHora, int CantPlazasQueOcupa) {
+    public TipoVehiculo(int id, String nombre, int CantPlazasQueOcupa,float PrecioPorHora ) {
         this.id = id;
         this.nombre = nombre;
         this.PrecioPorHora = PrecioPorHora;

@@ -43,6 +43,7 @@ public class ContorladorCochera{
      * @param id
      * @param nombre
      * @param capacidad 
+     * @param ocactual ocupacion actual de la cochera, se utiliza
      */
     public void editar(String id, String nombre, String capacidad, String ocactual){
         int f;
@@ -62,6 +63,8 @@ public class ContorladorCochera{
             l.update(new Cochera(Integer.parseInt(id),nombre,Integer.parseInt(capacidad),Integer.parseInt(ocactual)));
         }
     }
+    
+    
     /**
      * devuelve el listado completo de las cocheras
      * se utiliza para la jtable
@@ -71,7 +74,33 @@ public class ContorladorCochera{
         return l.readALL();
     }
     
-        public Cochera mostrar(int key){
+    
+    public Cochera mostrar(int key){
         return l.read(key);
+    }
+    
+    
+    /**
+     * 
+     * @param ocactual= cantidad de ocupaciones restantes
+     * @param id = id de la cochera donde se quiere guardar el dato
+     */
+    public void editarocupacion(int ocactual,int id){
+        //no requiere verificaciones porque los datos se reciben del registro de un nuevo vehiculo, y ya se verifican los datos ahi
+        l.updateocupaciones(ocactual, id);
+    }
+    
+    /**
+     * 
+     * @param nomb = nombre de la cochera, se va a usar para buscar en la base de datos
+     * @return, si encuentra una cochera que coincida con el nombre devuelve el ID, sino devuelve -1
+     */
+    public int indice(String nomb){
+        if(nomb.equals("")){
+            JOptionPane.showMessageDialog(null,"Error\nNo pueden haber campos vacios.");
+          return -1;
+        }
+        int i = l.indice(nomb);
+        return i;
     }
 }

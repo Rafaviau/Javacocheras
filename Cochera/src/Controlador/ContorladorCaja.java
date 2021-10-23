@@ -64,8 +64,13 @@ public class ContorladorCaja {
         return l.readALL();
     }
        
-   public Caja mostrar(int key){
-       return l.read(key);
+   public Caja mostrar(String key){
+       if(key.equals("")){
+           JOptionPane.showMessageDialog(null,"Error\nIngrese la fecha que desa buscar.");
+       }else{
+           return l.read(key);
+       }
+       return null;
    }
      
 }

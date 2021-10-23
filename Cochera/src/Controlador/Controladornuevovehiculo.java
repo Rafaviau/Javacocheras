@@ -1,5 +1,4 @@
 package Controlador;
-import Modelo.Cochera;
 import Modelo.TipoVehiculo;
 import Modelo.dao.DAOtipovehiculo;
 import java.util.List;
@@ -51,4 +50,11 @@ public class Controladornuevovehiculo {
         return l.read(key);
     }
 
+    public int indice(String nomb){
+        if(nomb.equals("")){
+            JOptionPane.showMessageDialog(null,"Error\nNo pueden haber campos vacios.");
+          return -1;
+        }
+        return l.indice(nomb);
+    }
 }

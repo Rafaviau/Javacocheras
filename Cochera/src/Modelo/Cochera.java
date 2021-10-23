@@ -63,7 +63,7 @@ public class Cochera {
 
     @Override
     public String toString() {
-        return "Cochera{" + "id=" + id + ", nombre=" + nombre + ", ocupaciones=" + ocupaciones + ", ocdisponibles=" + ocdisponibles + '}';
+        return nombre;
     }
     
     
